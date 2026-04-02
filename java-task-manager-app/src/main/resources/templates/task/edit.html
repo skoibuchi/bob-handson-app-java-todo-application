@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/default :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>タスク編集</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>タスク編集</h1>
+            <a th:href="@{/tasks/{id}(id=${taskId})}" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> 戻る
+            </a>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <form th:action="@{/tasks/{id}(id=${taskId})}" th:object="${taskDto}" method="post">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">タイトル <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="title" th:field="*{title}"
+                               th:classappend="${#fields.hasErrors('title')} ? 'is-invalid' : ''">
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
+                            タイトルエラー
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="description" class="form-label">説明</label>
+                        <textarea class="form-control" id="description" th:field="*{description}" rows="5"
+                                  th:classappend="${#fields.hasErrors('description')} ? 'is-invalid' : ''"></textarea>
+                        <div class="invalid-feedback" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
+                            説明エラー
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="status" class="form-label">ステータス <span class="text-danger">*</span></label>
+                            <select class="form-select" id="status" th:field="*{status}"
+                                    th:classappend="${#fields.hasErrors('status')} ? 'is-invalid' : ''">
+                                <option th:each="status : ${statuses}" 
+                                        th:value="${status.name()}" 
+                                        th:text="${status.displayName}">ステータス</option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('status')}" th:errors="*{status}">
+                                ステータスエラー
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="priority" class="form-label">優先度 <span class="text-danger">*</span></label>
+                            <select class="form-select" id="priority" th:field="*{priority}"
+                                    th:classappend="${#fields.hasErrors('priority')} ? 'is-invalid' : ''">
+                                <option th:each="priority : ${priorities}" 
+                                        th:value="${priority.name()}" 
+                                        th:text="${priority.displayName}">優先度</option>
+                            </select>
+                            <div class="invalid-feedback" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}">
+                                優先度エラー
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 mb-3">
+                            <label for="dueDate" class="form-label">期限</label>
+                            <input type="date" class="form-control" id="dueDate" th:field="*{dueDate}">
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end gap-2">
+                        <a th:href="@{/tasks}" class="btn btn-secondary">キャンセル</a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> 保存
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout/default :: layout(~{::title}, ~{::content})}">
+<head>
+    <title>タスク詳細</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>タスク詳細</h1>
+            <div>
+                <a th:href="@{/tasks}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> 戻る
+                </a>
+                <a th:href="@{/tasks/{id}/edit(id=${task.id})}" class="btn btn-primary">
+                    <i class="bi bi-pencil"></i> 編集
+                </a>
+                <form th:action="@{/tasks/{id}/delete(id=${task.id})}" method="post" style="display: inline;">
+                    <button type="submit" class="btn btn-danger" 
+                            onclick="return confirm('このタスクを削除してもよろしいですか？');">
+                        <i class="bi bi-trash"></i> 削除
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title mb-3" th:text="${task.title}">タスクタイトル</h5>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>ステータス:</strong>
+                        <span class="badge ms-2" 
+                              th:classappend="${task.status.name() == 'TODO' ? 'bg-secondary' : 
+                                               task.status.name() == 'IN_PROGRESS' ? 'bg-primary' : 
+                                               task.status.name() == 'ON_HOLD' ? 'bg-warning text-dark' : 'bg-success'}"
+                              th:text="${task.status.displayName}">ステータス</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>優先度:</strong>
+                        <span class="badge ms-2" 
+                              th:classappend="${task.priority.name() == 'HIGH' ? 'bg-danger' : 
+                                               task.priority.name() == 'MEDIUM' ? 'bg-warning text-dark' : 'bg-info'}"
+                              th:text="${task.priority.displayName}">優先度</span>
+                    </div>
+                </div>
+                
+                <div class="row mb-3" th:if="${task.dueDate != null}">
+                    <div class="col-md-12">
+                        <strong>期限:</strong>
+                        <span th:text="${#temporals.format(task.dueDate, 'yyyy年MM月dd日')}">2026年03月01日</span>
+                    </div>
+                </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>作成日時:</strong>
+                        <span th:text="${#temporals.format(task.createdAt, 'yyyy/MM/dd HH:mm:ss')}">2026/02/26 10:00:00</span>
+                    </div>
+                    <div class="col-md-6">
+                        <strong>更新日時:</strong>
+                        <span th:text="${#temporals.format(task.updatedAt, 'yyyy/MM/dd HH:mm:ss')}">2026/02/26 10:00:00</span>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="mb-3">
+                    <strong>説明:</strong>
+                    <p class="mt-2" th:text="${task.description}" style="white-space: pre-wrap;">タスクの説明</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
