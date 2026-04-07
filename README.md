@@ -21,9 +21,9 @@
    - https://www.oracle.com/java/technologies/downloads/#jdk21-windows
 - Maven
    - https://maven.apache.org/download.cgi
-- bob-handson-app-java-todo-application-main.zip
+- bob-handson-app-java-todo-application-closed.zip
    - 本ファイルを含むzipファイル
-   - https://github.com/skoibuchi/bob-handson-app-java-todo-application
+   - https://github.com/skoibuchi/bob-handson-app-java-todo-application/tree/closed
 
 ---
 
