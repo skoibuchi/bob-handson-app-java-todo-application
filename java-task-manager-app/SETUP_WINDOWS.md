@@ -28,36 +28,118 @@
 
 | ソフトウェア | バージョン | 用途 |
 |------------|----------|------|
-| Java Development Kit (JDK) | 21 | Javaアプリケーションの実行環境 |
+| Java Development Kit (JDK) | 21推奨（最低17以上） | Javaアプリケーションの実行環境 |
 | Apache Maven | 3.9以上 | ビルドツール・依存関係管理 |
 | Git | 最新版 | ソースコード管理（オプション） |
 
 
 ---
 
-## Java 21のインストール(21以外での動作は未確認です。)
+## Javaのインストール
 
-### 手順1: JDKのダウンロード
+**推奨バージョン: Java 21**（最低Java 17以上が必要）
+
+以下のいずれかのJDKをインストールしてください。
+
+### オプション1: IBM Semeru Runtimes
+
+IBM Semeru Runtimesは、OpenJ9 JVMを使用した高性能なJava実行環境です。
+
+1. IBM Semeru Runtimes公式サイトにアクセス
+   - URL: https://developer.ibm.com/languages/java/semeru-runtimes/downloads/
+
+2. **Java 21 (LTS)** を選択（または Java 17 (LTS)）
+
+3. **Windows**セクションから以下をダウンロード
+   - **推奨**: `Windows x64 JDK` (例: `ibm-semeru-open-jdk_x64_windows_21.x.x_openj9-x.x.x.msi`)
+   - または: `Windows x64 JDK (zip)` (例: `ibm-semeru-open-jdk_x64_windows_21.x.x_openj9-x.x.x.zip`)
+
+> **メリット**:
+> - 無料でオープンソース
+> - 商用利用可能
+> - メモリ効率が良い
+> - IBM のサポートあり
+
+### オプション2: OpenJDK
+
+OpenJDKは、Javaの公式オープンソース実装です。
+
+1. OpenJDK公式サイトにアクセス
+   - URL: https://jdk.java.net/21/ （または https://jdk.java.net/17/）
+
+2. **Windows / x64**セクションから以下をダウンロード
+   - `zip` ファイル (例: `openjdk-21.x.x_windows-x64_bin.zip`)
+
+> **メリット**:
+> - 完全無料
+> - オープンソース
+> - 商用利用可能
+> - ライセンスの制約なし
+
+### オプション3: Oracle JDK
+
+Oracle JDKは、Oracle社が提供する商用サポート付きのJava実行環境です。
 
 1. Oracle JDK公式サイトにアクセス
-   - URL: https://www.oracle.com/java/technologies/downloads/#jdk21-windows
+   - URL: https://www.oracle.com/java/technologies/downloads/#jdk21-windows （または #jdk17-windows）
 
 2. **Windows**セクションから以下のいずれかをダウンロード
    - **推奨**: `x64 Installer` (例: `jdk-21_windows-x64_bin.exe`)
    - または: `x64 Compressed Archive` (例: `jdk-21_windows-x64_bin.zip`)
 
-> **注意**: Oracleアカウントでのログインが必要な場合があります。
+> **注意**:
+> - Oracleアカウントでのログインが必要な場合があります
+> - 商用利用には有償サポート契約が必要な場合があります
 
 ### 手順2: JDKのインストール
 
-- Installerの場合
+#### IBM Semeru Runtimesの場合
+
+**MSI Installerの場合:**
+
+1. ダウンロードした `.msi` ファイルをダブルクリックして実行
+
+2. インストールウィザードが起動したら「Next」をクリック
+
+3. ライセンス契約に同意して「Next」をクリック
+
+4. インストール先の選択
+   - デフォルト: `C:\Program Files\Semeru\jdk-21.x.x+x` （または `jdk-17.x.x+x`）
+   - 必要に応じて変更可能（パスをメモしておく）
+   - 「Next」をクリック
+
+5. インストールが完了するまで待機
+
+6. 「Finish」をクリックしてウィザードを終了
+
+**ZIP Archiveの場合:**
+
+1. ダウンロードした `.zip` ファイルを解凍
+
+2. 解凍したフォルダを任意の場所に配置
+   - 推奨: `C:\Program Files\Semeru\jdk-21` （または `jdk-17`）
+
+3. フォルダのパスをメモしておく
+
+#### OpenJDKの場合
+
+1. ダウンロードした `.zip` ファイルを解凍
+
+2. 解凍したフォルダを任意の場所に配置
+   - 推奨: `C:\Program Files\Java\jdk-21` （または `jdk-17`）
+
+3. フォルダのパスをメモしておく
+
+#### Oracle JDKの場合
+
+**EXE Installerの場合:**
 
 1. ダウンロードした `.exe` ファイルをダブルクリックして実行
 
 2. インストールウィザードが起動したら「次へ」をクリック
 
 3. インストール先の選択
-   - デフォルト: `C:\Program Files\Java\jdk-21`
+   - デフォルト: `C:\Program Files\Java\jdk-21` （または `jdk-17`）
    - 必要に応じて変更可能（パスをメモしておく）
    - 「次へ」をクリック
 
@@ -65,13 +147,12 @@
 
 5. 「閉じる」をクリックしてウィザードを終了
 
-
-- Compressed Archiveの場合
+**ZIP Archiveの場合:**
 
 1. ダウンロードした `.zip` ファイルを解凍
 
 2. 解凍したフォルダを任意の場所に配置
-   - 推奨: `C:\Program Files\Java\jdk-21`
+   - 推奨: `C:\Program Files\Java\jdk-21` （または `jdk-17`）
 
 3. フォルダのパスをメモしておく
 
@@ -136,7 +217,9 @@
 2. 以下の情報を入力:
    - **変数名**: `JAVA_HOME`
    - **変数値**: JDKのインストールパス
-     - 例: `C:\Program Files\Java\jdk-21`
+     - IBM Semeru Runtimesの例: `C:\Program Files\Semeru\jdk-21.x.x+x` （または `jdk-17.x.x+x`）
+     - OpenJDKの例: `C:\Program Files\Java\jdk-21` （または `jdk-17`）
+     - Oracle JDKの例: `C:\Program Files\Java\jdk-21` （または `jdk-17`）
 
 3. 「OK」をクリック
 
@@ -191,13 +274,31 @@ java -version
 ```
 
 **期待される出力例:**
+
+IBM Semeru Runtimesの場合（Java 21）:
+```
+openjdk version "21.0.x" 2024-xx-xx
+IBM Semeru Runtime Open Edition 21.0.x.x (build 21.0.x+x)
+Eclipse OpenJ9 VM 21.0.x.x (build openj9-x.x.x, JRE 21 Windows 10 amd64-64-Bit)
+```
+
+OpenJDKの場合（Java 21）:
+```
+openjdk version "21.0.x" 2024-xx-xx
+OpenJDK Runtime Environment (build 21.0.x+x)
+OpenJDK 64-Bit Server VM (build 21.0.x+x, mixed mode, sharing)
+```
+
+※Java 17をインストールした場合は、バージョン番号が `"17.0.x"` と表示されます
+
+Oracle JDKの場合（Java 21）:
 ```
 java version "21.0.x" 2024-xx-xx LTS
 Java(TM) SE Runtime Environment (build 21.0.x+xx-LTS-xxx)
 Java HotSpot(TM) 64-Bit Server VM (build 21.0.x+xx-LTS-xxx, mixed mode, sharing)
 ```
 
-> **注意**: バージョン番号が `21.x.x` であることを確認してください。
+> **注意**: バージョン番号が `17.x.x` 以上であることを確認してください。Java 21推奨。
 
 ### 手順3: Javaコンパイラの確認
 
@@ -210,6 +311,8 @@ javac -version
 javac 21.0.x
 ```
 
+※Java 17をインストールした場合は `javac 17.0.x` と表示されます
+
 ### 手順4: Mavenのバージョン確認
 
 ```cmd
@@ -220,14 +323,16 @@ mvn -version
 ```
 Apache Maven 3.9.6 (xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx)
 Maven home: C:\Program Files\Apache\maven\apache-maven-3.9.6
-Java version: 21.0.x, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jdk-21
+Java version: 21.0.x, vendor: IBM Corporation (or Oracle Corporation, or N/A), runtime: C:\Program Files\Semeru\jdk-21.x.x+x (or other path)
 Default locale: ja_JP, platform encoding: UTF-8
 OS name: "windows 11", version: "10.0", arch: "amd64", family: "windows"
 ```
 
+※Java 17をインストールした場合は `Java version: 17.0.x` と表示されます
+
 > **確認ポイント:**
 > - Maven のバージョンが 3.9 以上であること
-> - Java version が 21.x.x であること
+> - Java version が 17.x.x 以上であること（21.x.x推奨）
 > - Maven home と Java runtime のパスが正しいこと
 
 ### トラブルシューティング（確認時）
@@ -441,7 +546,7 @@ mvn clean install
 where java
 ```
 
-2. JAVA_HOME を正しいJava 21のパスに設定
+2. JAVA_HOME を正しいJava 17以上のパスに設定
 
 3. 不要な古いJavaをアンインストール（オプション）
 
