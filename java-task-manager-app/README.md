@@ -43,7 +43,7 @@ TaskManagerは、個人のタスク管理を支援するシンプルなWebアプ
 
 ```bash
 git clone <repository-url>
-cd task-manager
+cd java-task-manager-app
 ```
 
 ### 2. アプリケーションのビルド
