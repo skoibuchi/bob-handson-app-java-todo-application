@@ -1,6 +1,6 @@
 # 設計書生成ルール
 1. テンプレート
-    - 設計書生成の際は以下のテンプレートを参照すること。
+    - (**重要**) 設計書生成の際は以下のテンプレートを参照し、準拠した項目を作成すること。
         - 要件定義書: templates/requirements_template.md
         - 基本設計書: templates/basic_design_template.md
         - 詳細設計書: templates/detail_design_template.md
